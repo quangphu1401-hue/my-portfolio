@@ -69,8 +69,8 @@ document.addEventListener('visibilitychange', function() {
     }
 });
 
-// typing text (kiểm tra tồn tại thư viện Typed để tránh lỗi khi offline)
-if (typeof Typed !== "undefined") {
+// typing text (tắt nếu không có phần tử .typing-text để tránh lỗi)
+if (typeof Typed !== "undefined" && document.querySelector(".typing-text")) {
     var typed = new Typed(".typing-text", {
         strings: ["lập trình Android", "lập trình với C++ và Python", "tìm hiểu Firebase", "sử dụng GitHub trong học tập"],
         loop: true,
