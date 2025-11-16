@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $('#menu').click(function () {
+    $('#menu').click(function() {
         $(this).toggleClass('fa-times');
         $('.navbar').toggleClass('nav-toggle');
     });
 
-    $(window).on('scroll load', function () {
+    $(window).on('scroll load', function() {
         $('#menu').removeClass('fa-times');
         $('.navbar').removeClass('nav-toggle');
 
@@ -16,7 +16,7 @@ $(document).ready(function () {
         }
 
         // scroll spy
-        $('section').each(function () {
+        $('section').each(function() {
             let height = $(this).height();
             let offset = $(this).offset().top - 200;
             let top = $(window).scrollTop();
@@ -30,63 +30,55 @@ $(document).ready(function () {
     });
 
     // smooth scrolling
-    $('a[href*="#"]').on('click', function (e) {
+    $('a[href*="#"]').on('click', function(e) {
         e.preventDefault();
         $('html, body').animate({
             scrollTop: $($(this).attr('href')).offset().top,
         }, 500, 'linear')
     });
 
-    // <!-- emailjs to mail contact form data -->
-    $("#contact-form").submit(function (event) {
-        emailjs.init("user_TTDmetQLYgWCLzHTDgqxm");
+    // $("#contact-form").submit(function (event) {
+    emailjs.init("user_TTDmetQLYgWCLzHTDgqxm");
 
-        emailjs.sendForm('contact_service', 'template_contact', '#contact-form')
-            .then(function (response) {
-                console.log('SUCCESS!', response.status, response.text);
-                document.getElementById("contact-form").reset();
-                alert("Form Submitted Successfully");
-            }, function (error) {
-                console.log('FAILED...', error);
-                alert("Form Submission Failed! Try Again");
-            });
-        event.preventDefault();
-    });
-    // <!-- emailjs to mail contact form data -->
-
+    emailjs.sendForm('contact_service', 'template_contact', '#contact-form')
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            document.getElementById("contact-form").reset();
+            alert("Form Submitted Successfully");
+        }, function(error) {
+            console.log('FAILED...', error);
+            alert("Form Submission Failed! Try Again");
+        });
+    event.preventDefault();
 });
+// });
 
 document.addEventListener('visibilitychange',
-    function () {
+    function() {
         if (document.visibilityState === "visible") {
-            document.title = "Portfolio | Jigar Sable";
+            document.title = "Portfolio | Phú Tô";
             $("#favicon").attr("href", "assets/images/favicon.png");
-        }
-        else {
+        } else {
             document.title = "Come Back To Portfolio";
             $("#favicon").attr("href", "assets/images/favhand.png");
         }
     });
 
 
-// <!-- typed js effect starts -->
-var typed = new Typed(".typing-text", {
-    strings: ["frontend development", "backend development", "web designing", "android development", "web development"],
+// var typed = new Typed(".typing-text", {
+strings: ["frontend development", "backend development", "web designing", "android development", "web development"],
     loop: true,
     typeSpeed: 50,
     backSpeed: 25,
     backDelay: 500,
 });
-// <!-- typed js effect ends -->
-
-async function fetchData(type = "skills") {
-    let response
-    type === "skills" ?
-        response = await fetch("skills.json")
-        :
-        response = await fetch("./projects/projects.json")
-    const data = await response.json();
-    return data;
+// async function fetchData(type = "skills") {
+let response
+type === "skills" ?
+    response = await fetch("skills.json") :
+    response = await fetch("./projects/projects.json")
+const data = await response.json();
+return data;
 }
 
 function showSkills(skills) {
@@ -104,64 +96,17 @@ function showSkills(skills) {
     skillsContainer.innerHTML = skillHTML;
 }
 
-function showProjects(projects) {
-    let projectsContainer = document.querySelector("#work .box-container");
-    let projectHTML = "";
-    projects.slice(0, 10).filter(project => project.category != "android").forEach(project => {
-        projectHTML += `
-        <div class="box tilt">
-      <img draggable="false" src="/assets/images/projects/${project.image}.png" alt="project" />
-      <div class="content">
-        <div class="tag">
-        <h3>${project.name}</h3>
-        </div>
-        <div class="desc">
-          <p>${project.desc}</p>
-          <div class="btns">
-            <a href="${project.links.view}" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-            <a href="${project.links.code}" class="btn" target="_blank">Code <i class="fas fa-code"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>`
-    });
-    projectsContainer.innerHTML = projectHTML;
-
-    // <!-- tilt js effect starts -->
-    VanillaTilt.init(document.querySelectorAll(".tilt"), {
-        max: 15,
-    });
-    // <!-- tilt js effect ends -->
-
-    /* ===== SCROLL REVEAL ANIMATION ===== */
-    const srtop = ScrollReveal({
-        origin: 'top',
-        distance: '80px',
-        duration: 1000,
-        reset: true
-    });
-
-    /* SCROLL PROJECTS */
-    srtop.reveal('.work .box', { interval: 200 });
-
-}
-
 fetchData().then(data => {
-    showSkills(data);
+    const wantedSkillNames = ["C++", "Python", "WordPress", "GitHub", "Android", "Firebase"];
+    const filteredSkills = data.filter(skill => wantedSkillNames.includes(skill.name));
+    showSkills(filteredSkills);
 });
 
-fetchData("projects").then(data => {
-    showProjects(data);
+
+// VanillaTilt.init(document.querySelectorAll(".tilt"), {
+max: 15,
 });
-
-// <!-- tilt js effect starts -->
-VanillaTilt.init(document.querySelectorAll(".tilt"), {
-    max: 15,
-});
-// <!-- tilt js effect ends -->
-
-
-// pre loader start
+// // pre loader start
 // function loader() {
 //     document.querySelector('.loader-container').classList.add('fade-out');
 // }
@@ -172,7 +117,7 @@ VanillaTilt.init(document.querySelectorAll(".tilt"), {
 // pre loader end
 
 // disable developer mode
-document.onkeydown = function (e) {
+document.onkeydown = function(e) {
     if (e.keyCode == 123) {
         return false;
     }
@@ -191,9 +136,11 @@ document.onkeydown = function (e) {
 }
 
 // Start of Tawk.to Live Chat
-var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-(function () {
-    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+var Tawk_API = Tawk_API || {},
+    Tawk_LoadStart = new Date();
+(function() {
+    var s1 = document.createElement("script"),
+        s0 = document.getElementsByTagName("script")[0];
     s1.async = true;
     s1.src = 'https://embed.tawk.to/60df10bf7f4b000ac03ab6a8/1f9jlirg6';
     s1.charset = 'UTF-8';
@@ -238,9 +185,6 @@ srtop.reveal('.skills .container .bar', { delay: 400 });
 
 /* SCROLL EDUCATION */
 srtop.reveal('.education .box', { interval: 200 });
-
-/* SCROLL PROJECTS */
-srtop.reveal('.work .box', { interval: 200 });
 
 /* SCROLL EXPERIENCE */
 srtop.reveal('.experience .timeline', { delay: 400 });
